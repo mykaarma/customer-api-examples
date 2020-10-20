@@ -5,6 +5,11 @@ This program takes two inputs:
 
 The code then iterates through the customers and adds them to each of the stores.
 
+# Dependencies
+- python3
+- pprint
+- requests
+
 # Scopes Needed
 - `customer.update`, at the department level.
 
