@@ -14,7 +14,7 @@ The code then iterates through the customers and adds them to each of the stores
 - `customer.update`, at the department level.
 
 # Authentication
-- save creds in mkauth.py (created by making a copy of mkauth.api.sample). Do NOT commit this file.
+- save creds in mkauth.py (created by making a copy of mkauth.py.sample). Do NOT commit this file.
 
 # How to run
 ```
