@@ -7,6 +7,7 @@ The code then iterates through the customers and adds them to each of the stores
 
 # Dependencies
 - python3
+- optparse
 - pprint
 - requests
 
