@@ -26,6 +26,7 @@ import pprint
 
 # Global, set to true by the parser if needed
 DEBUG = False
+SIMULATION = False
 
 def prettyprint(message, width=280):
     '''pretty prints the text'''
@@ -40,7 +41,7 @@ def debug_print(message):
 def read_dealer_info(dealer_file):
     """reads the dealer information into a list of department UIDs"""
     
-    #"Dealer ID","Dealer Name","DealerUID","Department Name","DepartmentUID"
+    #"Dealer Name","DealerUID","Department Name","DepartmentUID"
     import csv
     with open(dealer_file) as csvfile:
         department_uids = []
@@ -51,7 +52,7 @@ def read_dealer_info(dealer_file):
 
 def row_to_customer(row):
     '''converts the row to a customer dict'''
-    # First Name,Last Name,Phone,Address,City,State,Zip
+    # First Name,Last Name,Phone,Address Line 1,Address Line 2,City,State,Zip,Country
     customer = dict()
     customer["firstName"] = row["First Name"]
     customer["lastName"] = row["Last Name"]
@@ -65,10 +66,11 @@ def row_to_customer(row):
     customer["phoneNumbers"] = [officePhone]
 
     address = dict()
-    address["line1"] = row["Address"]
+    address["line1"] = row["Address Line 1"]
+    address["line2"] = row["Address Line 2"]
     address["city"] = row["City"]
     address["state"] = row["State"]
-    address["country"] = "US"
+    address["country"] = row["Country"]
     address["zip"] = row["Zip"]
     address["addressType"] = "B"
     customer["addresses"] = [address]
@@ -87,12 +89,13 @@ def add_customers_to_dealers(customer_file,dealer_file):
             customer = {"customer":customer_info}
             debug_print(customer)
             for dept_uid in department_uids:
-                kcustomercore.add_customer(creds, dept_uid, customer, DEBUG = DEBUG)
+                kcustomercore.add_customer(creds, dept_uid, customer, DEBUG = DEBUG, SIMULATION = SIMULATION)
     
 def main():
     global DEBUG #important, otherwise the global var DEBUG won't be set.
+    global SIMULATION #important, otherwise the global var SIMULATION won't be set.
     
-    usage = "usage: python3 %prog -d dealers.csv -c customers.csv >> out.log"
+    usage = "usage: python3 %prog [-v|--verbose] [-s|--simulation] -d dealers.csv -c customers.csv >> out.log"
     parser = OptionParser(usage)
     parser.add_option("-d", "--dealers", dest="dealer_file",
                       help="read config from DEALERCSV")
@@ -102,8 +105,11 @@ def main():
                       action="store_true", dest="verbose")
     parser.add_option("-q", "--quiet",
                       action="store_false", dest="verbose")
+    parser.add_option("-s", "--simulation",
+                      action="store_true", dest="simulation")
     (options, args) = parser.parse_args()
     DEBUG = options.verbose
+    SIMULATION = options.simulation
     
     if options.dealer_file == None:
         parser.error("missing dealer_file")

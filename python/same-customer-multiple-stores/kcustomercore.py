@@ -17,25 +17,31 @@ Copyright 2020 myKaarma
 
 import requests
 
+#Keys in the "creds" dict.
 KEY_USERNAME = 'username'
 KEY_PASSWORD = 'password'
 KEY_BASE_URL = 'base_url' #kept so this code can be used in dev and QA as well, not just prod.
 
 
-def add_customer(creds, dept_uid, customer, DEBUG = False):
+def add_customer(creds, dept_uid, customer, DEBUG = False, SIMULATION = False):
     """A simple method to add a new customer.
 
     This method will take the credentials (username, password, and base URL)
     the departmentUUID, and a DICT matching the customer object structure, and PUT it 
     in the API. An optional DEBUG boolean can be passed that will result in dumping of 
-    the HTTP response on stdout.
+    the HTTP response on stdout. Another optional input SIMULATION, when set to true, will 
+    lead to NO network traffic, just the dumping of the request.
     """
 
     url = "%s/department/%s/customer" % (creds[KEY_BASE_URL],dept_uid)
-    r = requests.put(url,auth=(creds[KEY_USERNAME],creds[KEY_PASSWORD]), json = customer)
-    if DEBUG:
-        print(r.json())
-    return r.json()['customerUuid']
+    if SIMULATION:
+        print("\n\n[SIM MODE] I would like to make a PUT request to %s with data %s" % (url, customer))
+        return "SIMULATION MODE ON"
+    else:
+        r = requests.put(url,auth=(creds[KEY_USERNAME],creds[KEY_PASSWORD]), json = customer)
+        if DEBUG:
+            print(r.json())
+        return r.json()['customerUuid']
 
 if __name__ == "__main__":
     print('Sorry, no direct usage available. Import and then call the methods.')
