@@ -19,5 +19,5 @@ The code then iterates through the customers and adds them to each of the stores
 
 # How to run
 ```
-python3 add-customers-dealerset.py -d dealers.csv -c customers.csv >> out.log
+python3 add-customer-dealerset.py -d dealers.csv -c customers.csv >> out.log
 ```
