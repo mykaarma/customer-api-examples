@@ -26,3 +26,4 @@ dealers.csv respectively and make sure that you update the sample details inside
 python3 add-customers-dealerset.py -d dealers.csv -c customers.csv >> out.log
 ```
 If you get an invalid auth credentials error then make sure to check both your credentials and the Department and Dealer UIDs which you have entered in the dealers.csv file. 
+
