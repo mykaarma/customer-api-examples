@@ -1,5 +1,5 @@
 # Examples on how to use the myKaarma customer API
-This repository contains sample applications built upon the myKaarma platform, specifially the customer API, whose specs are available at [this OpenAPI/Swagger page](https://api.mykaarma.com/customer/v2/index.html)
+This repository contains sample applications built upon the myKaarma platform, specifially the customer API, whose specs are available at [this OpenAPI/Swagger page](https://api.mykaarma.com/customer/v2/)
 
 # License
 ```
